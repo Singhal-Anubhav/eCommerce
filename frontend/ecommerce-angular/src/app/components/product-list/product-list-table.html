@@ -1,0 +1,23 @@
+<table class="table table-bordered" >
+    <thead class="table-dark">
+        <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Units in Stock</th>
+        </tr>
+    </thead>
+    <tbody  *ngIf="products.length && !isLoading; else loading">
+        <tr *ngFor="let tempList of products">
+            <td class="align-middle"><img [src]="tempList.imageURL" height="50"/></td>
+            <td class="align-middle">{{ tempList.name}}</td>
+            <td class="align-middle">{{tempList.unitPrice | currency:'INR'}}</td>
+            <td class="align-middle">{{tempList.unitsInStock}}</td>
+        </tr>
+    </tbody>
+    <ng-template #loading>
+    <tr>
+        <td colspan="4">Loading...</td>
+    </tr>
+</ng-template>
+</table>
