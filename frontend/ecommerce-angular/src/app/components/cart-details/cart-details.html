@@ -1,0 +1,69 @@
+<div class="main-content">
+    <div class="section-content section-content-p30">
+        <div class="container-fluid">
+            @if (cartItems.length>0) {
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th width="20%">Product Image</th>
+                        <th width="50%"> Product Details</th>
+                        <th width="30%"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let tempItem of cartItems">
+                        <td>
+                            <img src="{{ tempItem.imageURL }}" class="img-responsive" width="150px" />
+                        </td>
+                        <td>
+                            <p>{{tempItem.name}}</p>
+                            <p>{{tempItem.unitPrice | currency:'USD'}} </p>
+                        </td>
+                        <td>
+                            <div class="items">
+                                <label>Quantity: </label>
+                                <div class="row no-gutters">
+                                    <div class="row">
+                                        <div class="col">
+                                            <button class="btn btn-primary btn-sm"
+                                            (click)="incrementItem(tempItem)">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        </div>
+                                        <div class=" col ml-4 mr-2">
+                                            {{tempItem.quantity}}
+                                        </div>
+                                        <div class="col">
+                                            <button class="btn btn-primary btn-sm"
+                                            (click)="decrementItem(tempItem)">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-8"></div>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary btn-sm mt-2" (click)="removeItem(tempItem)">Remove</button>
+                            <p class="mt-2">Subtotal: {{tempItem.unitPrice * tempItem.quantity | currency:'USD'}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                        <td style="font-weight: bold;">
+                            <p>Total Quantity: {{totalQuantity}}</p>
+                            <p>Shipping: Free</p>
+                            <p>Total Price: {{totalPrice | currency:'USD'}}</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            }
+            @else {
+            <div class="alert alert-warning col-md-12">
+                Your Shopping Cart is Empty...
+            </div>
+            }
+
+        </div>
+    </div>
+</div>

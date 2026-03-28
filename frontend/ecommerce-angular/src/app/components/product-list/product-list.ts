@@ -3,6 +3,8 @@ import { ProductService } from '../../services/ProductService';
 import { Product } from '../../models/product';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import { CartService } from '../../services/cart-service';
+import { CartItem } from '../../models/cart-item';
 @Component({
   selector: 'app-product-list',
   standalone: false,
@@ -23,6 +25,7 @@ export class ProductList implements OnInit {
   theTotaElements: number = 0;
 
   constructor(private productService: ProductService,
+    private cartService: CartService,
     private cd: ChangeDetectorRef,
     private route: ActivatedRoute
   ) { }
@@ -45,13 +48,13 @@ export class ProductList implements OnInit {
 
   handleSearchProducts() {
     const keyword = this.route.snapshot.paramMap.get('keyword')!;
-    if(this.previousCategoryName != keyword){
-      this.thePageNumber=1;
+    if (this.previousCategoryName != keyword) {
+      this.thePageNumber = 1;
     }
-    this.previousCategoryName =keyword;
-    
+    this.previousCategoryName = keyword;
 
-    this.productService.searchProductsPaginate(keyword,this.thePageNumber-1,this.thePageSize).subscribe(this.processStrem());
+
+    this.productService.searchProductsPaginate(keyword, this.thePageNumber - 1, this.thePageSize).subscribe(this.processStrem());
 
   }
 
@@ -71,25 +74,25 @@ export class ProductList implements OnInit {
     then set the pageNumber to 1;
     */
 
-    if(this.previousCategoryId != this.currentCategoryId){
+    if (this.previousCategoryId != this.currentCategoryId) {
       this.thePageNumber = 1;
     }
     console.log(`currentCategoryId=${this.currentCategoryId} and previousCategryId=${this.previousCategoryId}`);
     this.previousCategoryId = this.currentCategoryId;
 
-    
+
 
     this.productService.getProductListPaginate(this.currentCategoryId,
-      this.thePageNumber-1, this.thePageSize).subscribe(this.processStrem());
+      this.thePageNumber - 1, this.thePageSize).subscribe(this.processStrem());
   }
 
   processStrem() {
     return {
       next: (data: any) => {
         this.products = data._embedded.products;
-        this.thePageNumber=data.page.number+1;
-         this.thePageSize=data.page.size;
-          this.theTotaElements=data.page.totalElements;
+        this.thePageNumber = data.page.number + 1;
+        this.thePageSize = data.page.size;
+        this.theTotaElements = data.page.totalElements;
         this.cd.detectChanges();
       },
       error: (err: any) => {
@@ -99,10 +102,18 @@ export class ProductList implements OnInit {
   }
 
   updatePageSize(newPageSize: string) {
-    if(+newPageSize != this.thePageSize){
+    if (+newPageSize != this.thePageSize) {
       this.thePageSize = +newPageSize;
-      this.thePageNumber =1;
+      this.thePageNumber = 1;
       this.listProducts();
     }
-}
+  }
+
+  addToCart(theProduct: Product): void {
+    console.log(`Adding to the cart : ${theProduct.name}, ${theProduct.unitPrice}`);
+
+    const cartItem = new CartItem(theProduct);
+
+    this.cartService.addToCart(cartItem);
+  }
 }

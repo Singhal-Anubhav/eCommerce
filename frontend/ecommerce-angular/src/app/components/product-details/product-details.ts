@@ -2,6 +2,8 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Product } from '../../models/product';
 import { ProductService } from '../../services/ProductService';
 import { ActivatedRoute } from '@angular/router';
+import { CartService } from '../../services/cart-service';
+import { CartItem } from '../../models/cart-item';
 
 @Component({
   selector: 'app-product-details',
@@ -14,6 +16,7 @@ export class ProductDetails implements OnInit{
 
   constructor(private productService: ProductService,
     private route: ActivatedRoute,
+    private cartService: CartService,
     private cd: ChangeDetectorRef
   ){}
 
@@ -32,6 +35,11 @@ export class ProductDetails implements OnInit{
       },
     }
     )
+  }
+
+  addToCart(product: Product):void{
+    let cartItem = new CartItem(product);
+    this.cartService.addToCart(cartItem);
   }
   
 }
