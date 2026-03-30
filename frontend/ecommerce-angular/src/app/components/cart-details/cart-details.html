@@ -25,8 +25,7 @@
                                 <div class="row no-gutters">
                                     <div class="row">
                                         <div class="col">
-                                            <button class="btn btn-primary btn-sm"
-                                            (click)="incrementItem(tempItem)">
+                                            <button class="btn btn-primary btn-sm" (click)="incrementItem(tempItem)">
                                                 <i class="fas fa-plus"></i>
                                             </button>
                                         </div>
@@ -34,8 +33,7 @@
                                             {{tempItem.quantity}}
                                         </div>
                                         <div class="col">
-                                            <button class="btn btn-primary btn-sm"
-                                            (click)="decrementItem(tempItem)">
+                                            <button class="btn btn-primary btn-sm" (click)="decrementItem(tempItem)">
                                                 <i class="fas fa-minus"></i>
                                             </button>
                                         </div>
@@ -53,6 +51,7 @@
                             <p>Total Quantity: {{totalQuantity}}</p>
                             <p>Shipping: Free</p>
                             <p>Total Price: {{totalPrice | currency:'USD'}}</p>
+                            <button routerLink="/checkout" class="btn btn-primary btn-sm">Checkout</button>
                         </td>
                     </tr>
                 </tbody>
