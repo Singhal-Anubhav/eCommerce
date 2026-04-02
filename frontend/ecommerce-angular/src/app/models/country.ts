@@ -1,6 +1,6 @@
 export class Country {
 
     id: number | undefined;
-    name: string | undefined;
+    name!: string;
     code: string | undefined;
 }
