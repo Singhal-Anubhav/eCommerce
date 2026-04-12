@@ -1,17 +1,18 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { EnvironmentInjector, Injectable } from '@angular/core';
 import { map, Observable, of } from 'rxjs';
 import { GetResponseCountry, GetResponseState } from './models/forms-drop-down-model';
 import { Country } from '../models/country';
 import { State } from '../models/state';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FormsDropDownService {
 
-  private contriesUrl = 'http://localhost:8080/api/countries';
-  private stateUrl = 'http://localhost:8080/api/states';
+  private contriesUrl = environment.eCommerceApiUrl + '/countries';
+  private stateUrl = environment.eCommerceApiUrl + '/states';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -37,14 +38,14 @@ export class FormsDropDownService {
     return of(data);
   }
 
-  getCountryList(): Observable<Country[]>{
+  getCountryList(): Observable<Country[]> {
     return this.httpClient.get<GetResponseCountry>(this.contriesUrl).pipe(
       map(response => response._embedded.countries)
     );
   }
 
-  getStateList(countryCode: string): Observable<State[]>{
-    const baseURL : string = `${this.stateUrl}/search/findByCountryCode?code=${countryCode}`;
+  getStateList(countryCode: string): Observable<State[]> {
+    const baseURL: string = `${this.stateUrl}/search/findByCountryCode?code=${countryCode}`;
     return this.httpClient.get<GetResponseState>(baseURL).pipe(
       map(response => response._embedded.states)
     );

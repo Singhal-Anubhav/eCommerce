@@ -1,4 +1,15 @@
 package com.backend.spring_boot_ecommerce.dao;
 
-public interface OrderRepository {
+import com.backend.spring_boot_ecommerce.entity.Orders;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.query.Param;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.web.bind.annotation.RequestParam;
+
+@RepositoryRestResource
+public interface OrderRepository extends JpaRepository<Orders, Long> {
+
+    Page<Orders> findByCustomerEmailOrderByDateCreatedDesc(@Param("email") String email, Pageable pageable);
 }

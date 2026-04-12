@@ -6,7 +6,7 @@
         </div>
         <div class="container-fluid">
             <div class="row">
-                <div *ngFor="let tempProduct of products" class="col-md-4">
+                <div *ngFor="let tempProduct of products" class="col-md-3">
                     <div class="product-box">
                         <a routerLink="/products/{{tempProduct.id}}">
                             <img src="{{tempProduct.imageURL}}" class="img-responsive">
