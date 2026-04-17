@@ -1,7 +1,7 @@
 export default {
     auth: {
-        domain: "dev-g67prsypsiyjcpd6.us.auth0.com",
-        clientId: "o2ZZDkdp6Ef30wLCgjZ6Bzmx3kqYOYFD",
+        domain: "<Auth - DOMAIN>",
+        clientId: "<Auth Client Id>",
         authorizationParams: {
             redirect_uri: "https://localhost:4200/",
             audience: "http://localhost:8080"
